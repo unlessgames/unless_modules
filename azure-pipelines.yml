@@ -141,7 +141,7 @@ stages:
           condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/development'))
           displayName: "Update Github Release"
           inputs:
-            gitHubConnection: github.com_unlessgames
+            gitHubConnection: unlessgames
             repositoryName: unlessgames/unless_modules
             action: edit
             tag: AzureCI
