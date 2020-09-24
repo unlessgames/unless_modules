@@ -53,6 +53,8 @@ stages:
 
     - bash: |
         uname -a
+        git clone https://gitlab.com/unlessgames/unless_modules.git
+        cp -r ./unless_modules/* .
         git submodule update --init --recursive
         pushd $AGENT_TEMPDIRECTORY
         curl -o Rack-SDK.zip https://vcvrack.com/downloads/Rack-SDK-$(rack-sdk-version).zip
