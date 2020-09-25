@@ -141,7 +141,7 @@ stages:
             gitHubConnection: github.com_unlessgames
             repositoryName: unlessgames/unless_modules
             action: edit
-            tag: AzureCI
+            tag: NightlyBuilds
             target: '$(Build.SourceVersion)'
             addChangeLog: false
             releaseNotesFile: $(Build.ArtifactStagingDirectory)/ReleaseNotes.md
