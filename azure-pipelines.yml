@@ -1,9 +1,5 @@
 trigger:
 - master
-- candidate*
-- release*
-- development*
-- arcane_dev*
 
 pr:
 - master
@@ -20,7 +16,7 @@ variables:
     mv $tf plugin.json
   add-release-notes: |
     cat <<- EOH
-    # unless modules development builds
+    # unless modules nightly builds
     EOH
     date
     echo ""
@@ -140,7 +136,6 @@ stages:
             $(add-release-notes) > $(Build.ArtifactStagingDirectory)/ReleaseNotes.md
           displayName: Add release notes
         - task: GitHubRelease@0
-          condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/development'))
           displayName: "Update Github Release"
           inputs:
             gitHubConnection: github.com_unlessgames
