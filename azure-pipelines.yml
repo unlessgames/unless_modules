@@ -143,6 +143,6 @@ stages:
             action: edit
             tag: NightlyBuilds
             target: '$(Build.SourceVersion)'
-            addChangeLog: false
+            addChangeLog: true
             releaseNotesFile: $(Build.ArtifactStagingDirectory)/ReleaseNotes.md
             assets: $(Build.ArtifactStagingDirectory)/*.zip
