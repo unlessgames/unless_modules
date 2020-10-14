@@ -1,9 +1,9 @@
 ## 1.1.1 - tower updates and fixes
 
 - towers
-  - copy values from **IN** port into faders
-  - randomize values in banks when no **IN** is connected
-  - extra draw modes for faders (staff notation & omrinsis)
+  - copy values from **IN** port to set faders
+  - randomize faders in bank when no **IN** is connected
+  - alternative fader draw modes (staff notation & omrinsis)
 
 - tancor
   - fix draggable bottom button
