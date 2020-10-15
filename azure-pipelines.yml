@@ -119,12 +119,12 @@ stages:
             targetPath: $(Build.ArtifactStagingDirectory)
         - bash: |
             ls -l $(Build.ArtifactStagingDirectory)
-            export EXTEND_TAG=`date "+%Y%m%d"`
+            export EXTEND_TAG=`date "+%Y_%m_%d_%H-%M"`
             for file in $(Build.ArtifactStagingDirectory)/*.zip; do mv "$file" "${file/.zip/-${EXTEND_TAG}.zip}"; done
             ls -l $(Build.ArtifactStagingDirectory)
           displayName: Tag asset names with Date
         - bash: |
-            date "+Last updated on %Y/%B/%d - %H:%M" > $(Build.ArtifactStagingDirectory)/ReleaseNotes.md
+            date "+# Latest : %Y - %B - %d - %H:%M" > $(Build.ArtifactStagingDirectory)/ReleaseNotes.md
           displayName: Add release notes
         - task: GitHubRelease@0
           displayName: "Update Github Release"
@@ -134,6 +134,6 @@ stages:
             action: edit
             tag: NightlyBuilds
             target: '$(Build.SourceVersion)'
-            addChangeLog: true
+            addChangeLog: false
             releaseNotesFile: $(Build.ArtifactStagingDirectory)/ReleaseNotes.md
             assets: $(Build.ArtifactStagingDirectory)/*.zip
