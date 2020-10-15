@@ -14,15 +14,6 @@ variables:
     tf=`mktemp`
     jq --arg VERSION "$version" '.version=$VERSION' plugin.json > $tf
     mv $tf plugin.json
-  add-release-notes: |
-    cat <<- EOH
-    # unless modules nightly builds
-    EOH
-    date
-    echo ""
-    echo "Most recent commits:"
-    echo ""
-    git log --pretty=oneline | head -5
 stages:
 - stage: build
   displayName: Build Plugin
@@ -133,7 +124,7 @@ stages:
             ls -l $(Build.ArtifactStagingDirectory)
           displayName: Tag asset names with Date
         - bash: |
-            $(add-release-notes) > $(Build.ArtifactStagingDirectory)/ReleaseNotes.md
+            date "+Last updated on %Y/%B/%d - %H:%M" > $(Build.ArtifactStagingDirectory)/ReleaseNotes.md
           displayName: Add release notes
         - task: GitHubRelease@0
           displayName: "Update Github Release"
@@ -143,6 +134,6 @@ stages:
             action: edit
             tag: NightlyBuilds
             target: '$(Build.SourceVersion)'
-            addChangeLog: false
+            addChangeLog: true
             releaseNotesFile: $(Build.ArtifactStagingDirectory)/ReleaseNotes.md
             assets: $(Build.ArtifactStagingDirectory)/*.zip
