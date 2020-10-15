@@ -126,12 +126,13 @@ stages:
             git clone https://gitlab.com/unlessgames/unless_modules.git
             cd unless_modules
             latest_commit=$(git rev-parse HEAD)
+            latest_commit_short=$(git rev-parse --short HEAD)
             cd ..
-            timestamp=$(printf "$(date "+# Latest : %B / %d - %H:%M (%Y)")")
-            commit_link=$(printf "from [https://gitlab.com/unlessgames/unless_modules/-/commit/$latest_commit](https://gitlab.com/unlessgames/unless_modules/-/commit/$latest_commit)")
+            timestamp=$(printf "$(date "+# %Y %B %d - %H:%M")")
+            commit_link=$(printf "[$latest_commit_short](https://gitlab.com/unlessgames/unless_modules/-/commit/$latest_commit)")
             changelog=$(sed -n '/^## /,/^## /p' CHANGELOG.md | head -n -1)
-            warn_message="### warning! expect the unexpected!"
-            printf "$timestamp\n\n$commit_link\n\n$changelog\n\n$warn_message\n\n# Downloads" > $(Build.ArtifactStagingDirectory)/ReleaseNotes.md
+            warn_message="# warning! expect the unexpected!"
+            printf "$timestamp from $commit_link\n\n$changelog\n\n\n\n$warn_message\n" > $(Build.ArtifactStagingDirectory)/ReleaseNotes.md
           displayName: Add release notes
         - task: GitHubRelease@0
           displayName: "Update Github Release"

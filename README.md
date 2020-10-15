@@ -1,10 +1,12 @@
-## nightly builds of unless_modules
+# unless modules
 
-This repo provides automatic builds of my modules for those who want to help with testing them before updates hit the VCV Library.
+##### this repo contains automated development builds of my modules for those who want to help with testing new features, modules etc. 
 
-If you don't want to deal with possibly broken modules, [get them from the Library](https://library.vcvrack.com/unless_modules) instead.
+### things here might br/eak or chagne or b70h!
 
-The nightly builds can be found at the [releases](https://github.com/unlessgames/unless_modules/releases), they need to be [manually installed](https://vcvrack.com/manual/Installing#installing-plugins-not-available-on-the-vcv-library) in order to work.
+##### get stable builds from the [**VCV Rack Library**](https://library.vcvrack.com/unless_modules)!
 
-Source code can be found at [gitlab.com/unlessgames/unless_modules](https://gitlab.com/unlessgames/unless_modules).
+### [Download Unstable Builds](https://github.com/unlessgames/unless_modules/releases) ([how-to-install](https://vcvrack.com/manual/Installing#installing-plugins-not-available-on-the-vcv-library))
+
+source @ [gitlab.com/unlessgames/unless_modules](https://gitlab.com/unlessgames/unless_modules).
 
