@@ -41,6 +41,9 @@ stages:
     - bash: |
         uname -a
         git clone https://gitlab.com/unlessgames/unless_modules.git
+        cd unless_modules
+        git rev-parse HEAD > ../LATEST_COMMIT.md
+        cd ..
         cp -r ./unless_modules/* .
         git submodule update --init --recursive
         pushd $AGENT_TEMPDIRECTORY
@@ -124,9 +127,11 @@ stages:
             ls -l $(Build.ArtifactStagingDirectory)
           displayName: Tag asset names with Date
         - bash: |
-            timestamp=$(printf "$(date "+# Latest : %Y - %B - %d - %H:%M")")
-            changelog=$(sed -n '/^## /,/## /p' CHANGELOG.md | head -n -1)
-            printf "$timestamp\n\n$changelog\n" > $(Build.ArtifactStagingDirectory)/ReleaseNotes.md
+            timestamp=$(printf "$(date "+# Latest build : %B / %d - %H:%M (%Y)")")
+            latest_commit=$(cat LATEST_COMMIT.md)
+            commit_link=$(printf "from [$latest_commit](https://gitlab.com/unlessgames/unless_modules/-/commit/$latest_commit)")
+            changelog=$(sed -n '/^## /,/^## /p' CHANGELOG.md | head -n -1)
+            printf "$timestamp\n\n$commit_link\n\n$changelog\n" > $(Build.ArtifactStagingDirectory)/ReleaseNotes.md
           displayName: Add release notes
         - task: GitHubRelease@0
           displayName: "Update Github Release"

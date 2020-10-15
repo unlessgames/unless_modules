@@ -1,4 +1,4 @@
-## 1.1.1 - tower updates and fixes
+## 1.1.1 - towers updates and fixes
 
 - towers
   - copy values from **IN** port to set faders
