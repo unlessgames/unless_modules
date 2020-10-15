@@ -128,10 +128,10 @@ stages:
             cd unless_modules
             latest_commit=$(git rev-parse HEAD)
             cd ..
-            timestamp=$(printf "$(date "+# Latest build : %B / %d - %H:%M (%Y)")")
-            commit_link=$(printf "from [](https://gitlab.com/unlessgames/unless_modules/-/commit/$latest_commit)")
+            timestamp=$(printf "$(date "+# Latest : %B / %d - %H:%M (%Y)")")
+            commit_link=$(printf "from [https://gitlab.com/unlessgames/unless_modules/-/commit/$latest_commit](https://gitlab.com/unlessgames/unless_modules/-/commit/$latest_commit)")
             changelog=$(sed -n '/^## /,/^## /p' CHANGELOG.md | head -n -1)
-            warn_message="#### Warning! Automated development builds, expect the unexpected!"
+            warn_message="### warning! expect the unexpected!"
             printf "$timestamp\n\n$commit_link\n\n$changelog\n\n$warn_message\n\n# Downloads" > $(Build.ArtifactStagingDirectory)/ReleaseNotes.md
           displayName: Add release notes
         - task: GitHubRelease@0
