@@ -6,14 +6,6 @@ pr:
 
 variables:
   rack-sdk-version: 1.1.6
-
-  add-gitrev-to-plugin-version: |
-    gitrev=`git rev-parse --short HEAD`
-    version="1.dev.${gitrev}"
-    echo "Updating to version=$version"
-    tf=`mktemp`
-    jq --arg VERSION "$version" '.version=$VERSION' plugin.json > $tf
-    mv $tf plugin.json
 stages:
 - stage: build
   displayName: Build Plugin
@@ -48,7 +40,14 @@ stages:
         unzip Rack-SDK.zip
       displayName: Get Rack-SDK
     - bash: |
-        $(add-gitrev-to-plugin-version)
+        cd unless_modules
+        gitrev=`git rev-parse --short HEAD`
+        cd ..
+        version="1.dev.${gitrev}"
+        echo "Updating to version=$version"
+        tf=`mktemp`
+        jq --arg VERSION "$version" '.version=$VERSION' plugin.json > $tf
+        mv $tf plugin.json
       displayName: Update Version in plugins.json
     - bash: |
         export RACK_DIR=$AGENT_TEMPDIRECTORY/Rack-SDK
