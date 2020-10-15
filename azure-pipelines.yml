@@ -124,7 +124,9 @@ stages:
             ls -l $(Build.ArtifactStagingDirectory)
           displayName: Tag asset names with Date
         - bash: |
-            date "+# Latest : %Y - %B - %d - %H:%M" > $(Build.ArtifactStagingDirectory)/ReleaseNotes.md
+            timestamp=$(printf "$(date "+# Latest : %Y - %B - %d - %H:%M")")
+            changelog=$(sed -n '/^## /,/## /p' CHANGELOG.md | head -n -1)
+            printf "$timestamp\n\n$changelog\n" > $(Build.ArtifactStagingDirectory)/ReleaseNotes.md
           displayName: Add release notes
         - task: GitHubRelease@0
           displayName: "Update Github Release"
