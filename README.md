@@ -4,7 +4,7 @@
 
 ### things here might br/eak or chagne or b70h!
 
-##### get stable builds from the [**VCV Rack Library**](https://library.vcvrack.com/unless_modules)!
+### get stable builds from the [**VCV Rack Library**](https://library.vcvrack.com/unless_modules)!
 
 ### [Download Unstable Builds](https://github.com/unlessgames/unless_modules/releases) ([how-to-install](https://vcvrack.com/manual/Installing#installing-plugins-not-available-on-the-vcv-library))
 
