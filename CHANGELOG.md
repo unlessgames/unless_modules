@@ -1,8 +1,9 @@
 ## 1.1.1 - towers updates and fixes
 
 - towers
-  - hold **Alt** to draw faders with mouse
+  - switching to **Alt** and click to draw faders with mouse
   - sample values from **IN** port to set faders
+  - relative and absolute sampling modes
   - randomize faders in bank when no **IN** is connected
   - alternative fader draw modes (staff notation & omrinsis)
 
