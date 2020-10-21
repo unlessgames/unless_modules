@@ -18,4 +18,4 @@ the manual and source code can be found at [gitlab.com/unlessgames/unless_module
 
 ### get (more) stable builds from the [**VCV Rack Library**](https://library.vcvrack.com/unless_modules)!
 
-### [Download Unstable Builds](https://github.com/unlessgames/unless_modules/releases) ([how-to-install](https://vcvrack.com/manual/Installing#installing-plugins-not-available-on-the-vcv-library))
+### [download development builds](https://github.com/unlessgames/unless_modules/releases) ([how-to-install](https://vcvrack.com/manual/Installing#installing-plugins-not-available-on-the-vcv-library))
