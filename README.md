@@ -5,8 +5,8 @@
 <img src="https://library.vcvrack.com/screenshots/unless_modules/snake.png" alt="snakia" height="100" style="display : inline-block;"/>
 <img src="https://library.vcvrack.com/screenshots/unless_modules/room.png" alt="snakia" height="100" style="display : inline-block;"/>
 <img src="https://library.vcvrack.com/screenshots/unless_modules/cantor.png" alt="snakia" height="100" style="display : inline-block;"/>
-<img src="https://library.vcvrack.com/screenshots/unless_modules/markov.png" alt="snakia" height="100" style="display : inline-block;"/>
 <img src="https://library.vcvrack.com/screenshots/unless_modules/atoms.png" alt="snakia" height="100" style="display : inline-block;"/>
+<img src="https://library.vcvrack.com/screenshots/unless_modules/markov.png" alt="snakia" height="100" style="display : inline-block;"/>
 <img src="https://library.vcvrack.com/screenshots/unless_modules/piong.png" alt="snakia" height="100" style="display : inline-block;"/>
 </p>
 
