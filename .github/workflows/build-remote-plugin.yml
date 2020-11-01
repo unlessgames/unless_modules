@@ -95,7 +95,7 @@ jobs:
           git_rev=`git rev-parse --short HEAD`
           git_revision=`git rev-parse HEAD`
           
-          changelog=$(sed -n '/^## /,/^## /p' ./CHANGELOG.md | head -n -1)
+          changelog=$(sed -n '0,/^## /p' ./CHANGELOG.md | head -n -1)
           commit_link() { echo "[$(echo $1 | cut -c1-8)](${{ env.repo }}/-/commit/$1)"; }
           commit_line() { echo "- $(commit_link $(echo $1 | cut -c1-40)) : $(echo $1 | cut -c41-)" ; }
           
