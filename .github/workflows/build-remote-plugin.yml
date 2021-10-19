@@ -17,9 +17,9 @@ on:
       [trigger_build]
 
 env:
-  rack-sdk-version : 1.1.6
-  tag : dev-builds
-  release-name : development builds
+  rack-sdk-version : 2.git.219bbaf1
+  tag : dev-builds-v2
+  release-name : development builds v2
   repo : https://gitlab.com/unlessgames/unless_modules
 
 defaults:
@@ -51,13 +51,13 @@ jobs:
     steps:
       - name : Get Sources from Remote
         run : |
-          git clone --depth 1 ${{ env.repo }} --recurse-submodules .
+          git clone --depth 1 ${{ env.repo }} --single-branch --branch v2 --recurse-submodules .
           echo "git-rev=$(git rev-parse --short HEAD)" >> $GITHUB_ENV
           
       - name: Get Rack-SDK
         run: |
           pushd $HOME
-          curl -o Rack-SDK.zip https://vcvrack.com/downloads/Rack-SDK-${{ env.rack-sdk-version }}.zip
+          curl -o Rack-SDK.zip https://vcvrack.com/downloads/Rack-SDK-${{ env.rack-sdk-version }}-lin.zip
           unzip Rack-SDK.zip
       - name: Patch plugin.mk, use 7zip on Windows
         if: runner.os == 'Windows'
