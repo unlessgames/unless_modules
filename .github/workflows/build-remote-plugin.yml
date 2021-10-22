@@ -87,14 +87,12 @@ jobs:
           RACK_DIR: Rack-SDK
           CC: ${{ matrix.config.compiler }}
         run: |
-          ls -lh
           make -j dist
 #          make -j dep
-#          export RACK_DIR=$HOME/Rack-SDK
       - name: Upload artifact
         uses: actions/upload-artifact@v2
         with:
-          path: dist
+          path: dist/*.vcvplugin
           name: ${{ matrix.config.arch }}
 
   publish:
@@ -104,7 +102,7 @@ jobs:
     steps:
       - name : Generate Release Notes
         run : |
-          git clone --depth 5 ${{ env.repo }} --recurse-submodules .
+          git clone --depth 5 ${{ env.repo }} --recurse-submodules --branch ${{ env.branch }}
           
           git_rev=`git rev-parse --short HEAD`
           git_revision=`git rev-parse HEAD`
