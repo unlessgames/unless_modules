@@ -42,16 +42,16 @@ jobs:
             compiler: cc
             install-dependencies: |
               sudo apt-get install -y libglu-dev
-#           - os: macos-latest
-#             arch: mac
-#             compiler: cc
-#             install-dependencies: |
-#               brew install mesa
-#           - os: windows-latest
-#             arch: win
-#             compiler: gcc
-#             install-dependencies: |
-#               choco install --no-progress -y zip
+          - os: macos-latest
+            arch: mac
+            compiler: cc
+            install-dependencies: |
+              brew install mesa
+          - os: windows-latest
+            arch: win
+            compiler: gcc
+            install-dependencies: |
+              choco install --no-progress -y zip
     steps:
       - name : Get Sources from Remote
         run : |
@@ -132,7 +132,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           keep_latest: 0
-          delete_tag_pattern: dev-build-v2
+          delete_tag_pattern: dev-builds-v2
       - name: Create Release
         uses: actions/create-release@v1
         env:
