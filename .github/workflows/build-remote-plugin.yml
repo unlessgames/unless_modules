@@ -19,8 +19,9 @@ on:
 env:
   rack-sdk-version : 1.1.6
   tag : dev-builds-v1
-  release-name : development builds
+  release-name : development builds v1
   repo : https://gitlab.com/unlessgames/unless_modules
+  branch : v1
 
 defaults:
   run:
@@ -33,25 +34,19 @@ jobs:
     strategy:
       matrix:
         config:
-        - {
-            name: Linux,
+          - name: Linux,
             os: ubuntu-latest,
             prepare-os: sudo apt install -y libglu-dev
-          }
-        - {
-            name: MacOS,
+          - name: MacOS,
             os: macos-latest,
             prepare-os: ""
-          }
-        - {
-            name: Windows,
+          - name: Windows,
             os: windows-latest,
             prepare-os: export CC=gcc
-          }
     steps:
       - name : Get Sources from Remote
         run : |
-          git clone --depth 1 ${{ env.repo }} --recurse-submodules .
+          git clone ${{ env.repo }} --depth 1 --recurse-submodules --branch ${{ env.branch }} .
           echo "git-rev=$(git rev-parse --short HEAD)" >> $GITHUB_ENV
           
       - name: Get Rack-SDK
@@ -64,15 +59,15 @@ jobs:
         run: |
           sed -i 's/zip -q -9 -r/7z a -tzip -mx=9/' $HOME/Rack-SDK/plugin.mk
           
-     - name: Modify plugin version
+      - name: Modify plugin version
         # only modify plugin version if no tag was created
         # if: "! startsWith(github.ref, 'refs/tags/v')"
-       run: |
-         plugin_version=`jq -r '.version' plugin.json`
-         dev_version="${plugin_version}-${{ env.git-rev }}"
-         echo "Set plugin.json version from $plugin_version to $dev_version"
-         cat <<< `jq --arg VERSION "$dev_version" '.version=$VERSION' plugin.json` > plugin.json
-         cat plugin.json
+        run: |
+          plugin_version=`jq -r '.version' plugin.json`
+          dev_version="${plugin_version}-${{ env.git-rev }}"
+          echo "Set plugin.json version from $plugin_version to $dev_version"
+          cat <<< `jq --arg VERSION "$dev_version" '.version=$VERSION' plugin.json` > plugin.json
+          cat plugin.json
       - name: Build plugin
         run: |
           ${{ matrix.config.prepare-os }}
@@ -92,7 +87,7 @@ jobs:
     steps:
       - name : Generate Release Notes
         run : |
-          git clone --depth 5 ${{ env.repo }} --recurse-submodules .
+          git clone ${{ env.repo }} --depth 5 --branch ${{ env.branch }} --recurse-submodules .
           
           git_rev=`git rev-parse --short HEAD`
           git_revision=`git rev-parse HEAD`
@@ -122,7 +117,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           keep_latest: 0
-          delete_tag_pattern: dev-builds-v1
+          delete_tag_pattern: ${{ env.tag }}
       - name: Create Release
         uses: actions/create-release@v1
         env:
