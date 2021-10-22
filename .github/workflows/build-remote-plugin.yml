@@ -86,8 +86,8 @@ jobs:
           RACK_DIR: Rack-SDK
           CC: ${{ matrix.config.compiler }}
         run: |
-          make -j dep
           make -j dist
+#          make -j dep
 #          export RACK_DIR=$HOME/Rack-SDK
       - name: Upload artifact
         uses: actions/upload-artifact@v2
