@@ -59,15 +59,15 @@ jobs:
         run: |
           sed -i 's/zip -q -9 -r/7z a -tzip -mx=9/' $HOME/Rack-SDK/plugin.mk
           
-      - name: Modify plugin version
-        # only modify plugin version if no tag was created
-        # if: "! startsWith(github.ref, 'refs/tags/v')"
-        run: |
-          plugin_version=`jq -r '.version' plugin.json`
-          dev_version="${plugin_version}-${{ env.git-rev }}"
-          echo "Set plugin.json version from $plugin_version to $dev_version"
-          cat <<< `jq --arg VERSION "$dev_version" '.version=$VERSION' plugin.json` > plugin.json
-          cat plugin.json
+#       - name: Modify plugin version
+#         # only modify plugin version if no tag was created
+#         # if: "! startsWith(github.ref, 'refs/tags/v')"
+#         run: |
+#           plugin_version=`jq -r '.version' plugin.json`
+#           dev_version="${plugin_version}-${{ env.git-rev }}"
+#           echo "Set plugin.json version from $plugin_version to $dev_version"
+#           cat <<< `jq --arg VERSION "$dev_version" '.version=$VERSION' plugin.json` > plugin.json
+#           cat plugin.json
       - name: Build plugin
         run: |
           ${{ matrix.config.prepare-os }}
@@ -104,7 +104,7 @@ jobs:
           ## latest commits
           $(git log --pretty=oneline | head -5 | while read line ; do echo $(commit_line "$line") ; done)
           # downloads
-            - note : the version of the zip file is different from the latest changelog version seen above. that is intentional and the zip contains the latest things. [see why this is](https://community.vcvrack.com/t/rack-stutter-audio-noise-loading-a-patch/11542/37)
+            - note : the version of the zip file might be different from the latest version seen above in the changelog. this is intentional and the zip contains the latest things. [see why this is](https://community.vcvrack.com/t/rack-stutter-audio-noise-loading-a-patch/11542/37)
           EOF
           
           echo 'release-notes<<EOF' >> $GITHUB_ENV
