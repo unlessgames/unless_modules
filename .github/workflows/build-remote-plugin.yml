@@ -6,12 +6,14 @@
 # - generating release notes based on CHANGELOG.md and latest commits
 # - triggering build through github api since usually no pushing happens here
 
-name: Build Remote VCV Rack Plugin
+# - converted for v2 based on the workflow from dhemery/DHE-Modules
+
+name: Build Remote VCV Rack v2 Plugin
 
 on: 
   push: 
     branches:
-      - master
+      - v2
   repository_dispatch:
     types: 
       [trigger_build]
@@ -21,6 +23,7 @@ env:
   tag : dev-builds-v2
   release-name : development builds v2
   repo : https://gitlab.com/unlessgames/unless_modules
+  branch : v2
 
 defaults:
   run:
@@ -31,38 +34,41 @@ jobs:
     name: ${{ matrix.config.name }}
     runs-on: ${{ matrix.config.os }}
     strategy:
+      fail-fast : false
       matrix:
         config:
-        - {
-            name: Linux,
-            os: ubuntu-latest,
-            prepare-os: sudo apt install -y libglu-dev
-          }
-        - {
-            name: MacOS,
-            os: macos-latest,
-            prepare-os: ""
-          }
-        - {
-            name: Windows,
-            os: windows-latest,
-            prepare-os: export CC=gcc
-          }
+          - os: ubuntu-latest
+            arch: lin
+            compiler: cc
+            install-dependencies: |
+              sudo apt-get install -y libglu-dev
+          - os: macos-latest
+            arch: mac
+            compiler: cc
+            install-dependencies: |
+              brew install mesa
+          - os: windows-latest
+            arch: win
+            compiler: gcc
+            install-dependencies: |
+              choco install --no-progress -y zip
     steps:
       - name : Get Sources from Remote
         run : |
-          git clone --depth 1 ${{ env.repo }} --single-branch --branch v2 --recurse-submodules .
+          git clone --depth 1 ${{ env.repo }} --single-branch --branch ${{ env.branch }} --recurse-submodules .
           echo "git-rev=$(git rev-parse --short HEAD)" >> $GITHUB_ENV
           
       - name: Get Rack-SDK
         run: |
           pushd $HOME
-          curl -o Rack-SDK.zip https://vcvrack.com/downloads/Rack-SDK-${{ env.rack-sdk-version }}-lin.zip
-          unzip Rack-SDK.zip
-      - name: Patch plugin.mk, use 7zip on Windows
-        if: runner.os == 'Windows'
-        run: |
-          sed -i 's/zip -q -9 -r/7z a -tzip -mx=9/' $HOME/Rack-SDK/plugin.mk
+          curl -o sdk.zip https://vcvrack.com/downloads/Rack-SDK-${{ env.rack-sdk-version }}-${{ matrix.config.arch }}.zip
+          unzip sdk.zip
+          
+#       - name: Patch plugin.mk, use 7zip on Windows
+#         if: runner.os == 'Windows'
+#         run: |
+#           sed -i 's/zip -q -9 -r/7z a -tzip -mx=9/' $HOME/Rack-SDK/plugin.mk
+          
 #      - name: Modify plugin version
         # only modify plugin version if no tag was created
         # if: "! startsWith(github.ref, 'refs/tags/v')"
@@ -71,17 +77,23 @@ jobs:
 #          dev_version="${plugin_version}-${{ env.git-rev }}"
 #          echo "Set plugin.json version from $plugin_version to $dev_version"
 #          cat <<< `jq --arg VERSION "$dev_version" '.version=$VERSION' plugin.json` > plugin.json
-      - name: Build plugin
+      - name: Install Dependencies
         run: |
-          ${{ matrix.config.prepare-os }}
-          export RACK_DIR=$HOME/Rack-SDK
+          ${{ matrix.config.install-dependencies }}
+
+      - name: Build plugin
+        env:
+          RACK_DIR: Rack-SDK
+          CC: ${{ matrix.config.compiler }}
+        run: |
           make -j dep
           make -j dist
+#          export RACK_DIR=$HOME/Rack-SDK
       - name: Upload artifact
         uses: actions/upload-artifact@v2
         with:
           path: dist
-          name: ${{ matrix.config.name }}
+          name: ${{ matrix.config.arch }}
 
   publish:
     name: Publish plugin
@@ -120,6 +132,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           keep_latest: 0
+          delete_pattern: dev-build-v2
       - name: Create Release
         uses: actions/create-release@v1
         env:
