@@ -60,10 +60,11 @@ jobs:
           
       - name: Get Rack-SDK
         run: |
-          pushd $HOME
+          
           curl -o sdk.zip https://vcvrack.com/downloads/Rack-SDK-${{ env.rack-sdk-version }}-${{ matrix.config.arch }}.zip
           unzip sdk.zip
-          
+        # pushd $HOME
+        
 #       - name: Patch plugin.mk, use 7zip on Windows
 #         if: runner.os == 'Windows'
 #         run: |
@@ -86,6 +87,7 @@ jobs:
           RACK_DIR: Rack-SDK
           CC: ${{ matrix.config.compiler }}
         run: |
+          ls -lh
           make -j dist
 #          make -j dep
 #          export RACK_DIR=$HOME/Rack-SDK
