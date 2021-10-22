@@ -18,7 +18,7 @@ on:
 
 env:
   rack-sdk-version : 1.1.6
-  tag : dev-builds
+  tag : dev-builds-v1
   release-name : development builds
   repo : https://gitlab.com/unlessgames/unless_modules
 
