@@ -132,7 +132,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           keep_latest: 0
-          delete_pattern: dev-build-v2
+          delete_tag_pattern: dev-build-v2
       - name: Create Release
         uses: actions/create-release@v1
         env:
