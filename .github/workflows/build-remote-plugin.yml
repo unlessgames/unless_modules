@@ -137,7 +137,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           tag_name: ${{ env.tag }}
-          release_name: development builds for Rack v${{ env.rack-sdk-version }}
+          release_name: dev-builds for Rack v${{ env.rack-sdk-version }}
           body: ${{ env.release-notes }}
           draft: false
           prerelease: false
