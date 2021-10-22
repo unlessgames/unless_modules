@@ -6,7 +6,7 @@
 # - generating release notes based on CHANGELOG.md and latest commits
 # - triggering build through github api since usually no pushing happens here
 
-# - converted for v2 based on the workflow from dhemery/DHE-Modules
+# - modified for v2 based on the workflow from dhemery/DHE-Modules
 
 name: Build Remote VCV Rack v2 Plugin
 
@@ -131,7 +131,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           keep_latest: 0
-          delete_tag_pattern: dev-builds-v2
+          delete_tag_pattern: ${{ env.tag }}
       - name: Create Release
         uses: actions/create-release@v1
         env:
