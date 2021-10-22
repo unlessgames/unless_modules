@@ -42,16 +42,16 @@ jobs:
             compiler: cc
             install-dependencies: |
               sudo apt-get install -y libglu-dev
-          - os: macos-latest
-            arch: mac
-            compiler: cc
-            install-dependencies: |
-              brew install mesa
-          - os: windows-latest
-            arch: win
-            compiler: gcc
-            install-dependencies: |
-              choco install --no-progress -y zip
+#           - os: macos-latest
+#             arch: mac
+#             compiler: cc
+#             install-dependencies: |
+#               brew install mesa
+#           - os: windows-latest
+#             arch: win
+#             compiler: gcc
+#             install-dependencies: |
+#               choco install --no-progress -y zip
     steps:
       - name : Get Sources from Remote
         run : |
@@ -102,7 +102,7 @@ jobs:
     steps:
       - name : Generate Release Notes
         run : |
-          git clone --depth 5 ${{ env.repo }} --recurse-submodules --branch ${{ env.branch }}
+          git clone --depth 5 ${{ env.repo }} --recurse-submodules --branch ${{ env.branch }} .
           
           git_rev=`git rev-parse --short HEAD`
           git_revision=`git rev-parse HEAD`
