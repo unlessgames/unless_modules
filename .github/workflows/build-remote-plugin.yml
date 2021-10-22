@@ -11,7 +11,7 @@ name: Build Remote VCV Rack Plugin
 on: 
   push: 
     branches:
-      - master
+      - v1
   repository_dispatch:
     types: 
       [trigger_build]
@@ -63,14 +63,16 @@ jobs:
         if: runner.os == 'Windows'
         run: |
           sed -i 's/zip -q -9 -r/7z a -tzip -mx=9/' $HOME/Rack-SDK/plugin.mk
-#      - name: Modify plugin version
+          
+     - name: Modify plugin version
         # only modify plugin version if no tag was created
         # if: "! startsWith(github.ref, 'refs/tags/v')"
-#        run: |
-#          plugin_version=`jq -r '.version' plugin.json`
-#          dev_version="${plugin_version}-${{ env.git-rev }}"
-#          echo "Set plugin.json version from $plugin_version to $dev_version"
-#          cat <<< `jq --arg VERSION "$dev_version" '.version=$VERSION' plugin.json` > plugin.json
+       run: |
+         plugin_version=`jq -r '.version' plugin.json`
+         dev_version="${plugin_version}-${{ env.git-rev }}"
+         echo "Set plugin.json version from $plugin_version to $dev_version"
+         cat <<< `jq --arg VERSION "$dev_version" '.version=$VERSION' plugin.json` > plugin.json
+         cat plugin.json
       - name: Build plugin
         run: |
           ${{ matrix.config.prepare-os }}
