@@ -117,7 +117,7 @@ jobs:
           ## latest commits
           $(git log --pretty=oneline | head -5 | while read line ; do echo $(commit_line "$line") ; done)
           # downloads
-            - note : the version of the zip file might be different from the latest version seen above in the changelog. this is intentional and the zip contains the latest things. [see why this is](https://community.vcvrack.com/t/rack-stutter-audio-noise-loading-a-patch/11542/37)
+            - note : the version of the plugin might be different from the latest version seen above in the changelog. this is intentional and the build contains the latest updates nevertheless. [see why this is](https://community.vcvrack.com/t/rack-stutter-audio-noise-loading-a-patch/11542/37)
           EOF
           
           echo 'release-notes<<EOF' >> $GITHUB_ENV
