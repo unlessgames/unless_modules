@@ -36,17 +36,20 @@ jobs:
       fail-fast : false
       matrix:
         config:
-          - os: ubuntu-latest
+          - name : linux
+            os: ubuntu-latest
             arch: lin
             compiler: cc
             install-dependencies: |
               sudo apt-get install -y libglu-dev
-          - os: macos-latest
+          - name : mac
+            os: macos-latest
             arch: mac
             compiler: cc
             install-dependencies: |
               brew install mesa
-          - os: windows-latest
+          - name : windows
+            os: windows-latest
             arch: win
             compiler: gcc
             install-dependencies: |
