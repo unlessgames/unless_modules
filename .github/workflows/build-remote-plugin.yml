@@ -34,14 +34,14 @@ jobs:
     strategy:
       matrix:
         config:
-          - name: Linux,
-            os: ubuntu-latest,
+          - name: linux
+            os: ubuntu-latest
             prepare-os: sudo apt install -y libglu-dev
-          - name: MacOS,
-            os: macos-latest,
+          - name: macOS
+            os: macos-latest
             prepare-os: ""
-          - name: Windows,
-            os: windows-latest,
+          - name: windows
+            os: windows-latest
             prepare-os: export CC=gcc
     steps:
       - name : Get Sources from Remote
