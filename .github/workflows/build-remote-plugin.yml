@@ -41,7 +41,8 @@ jobs:
             arch: lin
             compiler: cc
             install-dependencies: |
-              sudo apt-get install -y libglu-dev
+              sudo apt-get update
+              sudo apt-get install -y libglu-dev --fix-missing
           - name : mac
             os: macos-latest
             arch: mac
