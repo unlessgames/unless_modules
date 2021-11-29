@@ -6,7 +6,6 @@
 # - generating release notes based on CHANGELOG.md and latest commits
 # - triggering build through github api since usually no pushing happens here
 
-
 name: Build Remote VCV Rack Plugin
 
 on: 
