@@ -19,7 +19,7 @@ on:
       [trigger_build]
 
 env:
-  rack-sdk-version : 2.beta.2
+  rack-sdk-version : 2.1.0
   tag : dev-builds-v2
   repo : https://gitlab.com/unlessgames/unless_modules
   branch : v2
