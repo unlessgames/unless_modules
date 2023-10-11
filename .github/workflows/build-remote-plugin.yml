@@ -49,12 +49,12 @@ jobs:
             compiler: cc
             install-dependencies: |
               brew install mesa
-          - name : mac_arm
-            os: macos-latest
-            arch: mac-arm64
-            compiler: cc
-            install-dependencies: |
-              brew install mesa
+          # - name : mac_arm
+          #   os: macos-latest
+          #   arch: mac-arm64
+          #   compiler: cc
+          #   install-dependencies: |
+          #     brew install mesa
           - name : windows
             os: windows-latest
             arch: win-x64
